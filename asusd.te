@@ -1,5 +1,10 @@
 policy_module(asusd, 0.1)
 
+require {
+  class netlink_kobject_uevent_socket { bind create getattr getopt setopt };
+  type sysfs_t;
+}
+
 type asusd_t;
 
 type asusd_exec_t;
@@ -15,6 +20,7 @@ watch_files_pattern(asusd_t, asusd_etc_t, asusd_etc_t)
 write_files_pattern(asusd_t, asusd_etc_t, asusd_etc_t)
 
 dev_rw_sysfs(asusd_t)
+watch_files_pattern(asusd_t, sysfs_t, sysfs_t)
 udev_read_pid_files(asusd_t)
 fs_read_cgroup_files(asusd_t)
 
@@ -24,8 +30,4 @@ optional_policy(`
   dbus_system_bus_client(asusd_t)
 ')
 
-
-#============= ToDo ==============
-#allow asusd_t self:netlink_kobject_uevent_socket { bind create getattr getopt setopt };
-#allow asusd_t self:netlink_kobject_uevent_sock create_socket_perms;
-#allow asusd_t sysfs_t:file watch;
+allow asusd_t self:netlink_kobject_uevent_socket { bind create getattr getopt setopt };
