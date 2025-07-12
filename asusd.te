@@ -1,7 +1,7 @@
 policy_module(asusd, 0.1)
 
 require {
-  class netlink_kobject_uevent_socket { bind create getattr getopt setopt };
+  class netlink_kobject_uevent_socket { bind create getattr getopt read setopt };
   type sysfs_t;
 }
 
@@ -25,9 +25,9 @@ udev_read_pid_files(asusd_t)
 fs_read_cgroup_files(asusd_t)
 
 optional_policy(`
-  dbus_read_pid_files(asusd_t)
-  dbus_stream_connect_system_dbusd(asusd_t)
-  dbus_system_bus_client(asusd_t)
+	dbus_connect_system_bus(asusd_t)
+	dbus_system_bus_client(asusd_t)
+  userdom_dbus_send_all_users(asusd_t)
 ')
 
-allow asusd_t self:netlink_kobject_uevent_socket { bind create getattr getopt setopt };
+allow asusd_t self:netlink_kobject_uevent_socket { bind create getattr getopt read setopt };
