@@ -36,8 +36,8 @@ optional_policy(`
 ')
 
 optional_policy(`
-	dbus_connect_system_bus(asusd_t)
-	dbus_system_bus_client(asusd_t)
+  dbus_connect_system_bus(asusd_t)
+  dbus_system_bus_client(asusd_t)
 ')
 
 optional_policy(`
